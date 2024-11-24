@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Config Vali-Diff-erator 2000 is a Python-based tool designed for network engineers to validate configuration files against a predefined "golden standard." It provides detailed reports of matched, unmatched, and differing lines in various formats, including plain text and a visually appealing HTML diff.
+The Config Vali-Diff-erator 2000 is a Python-based tool designed for network engineers to validate configuration files (based on configuration files on a Cisco IOS device but could be adapted to any config really!) against a predefined "golden standard." It provides detailed reports of matched, unmatched, and differing lines in various formats, including plain text and a visually appealing HTML diff. Basically, the intent is to provide a tool to help provide config compliance in an environment. You define what the sections of a config should look like...hostname, AAAA policy, interfaces, routing protocol....whatever. You define the sections of config to check in the "golden_standard.yaml" and if done correctly, this script will kick out reports telling you all you need to know!
 
 ---
 
@@ -94,14 +94,9 @@ This project would not have been possible without the incredible tools and libra
 CiscoConfParse
 PyYAML
 Rich
-Special thanks to gcaudle66 for their contributions, inspiration, and thorough testing of this tool to ensure its effectiveness and robustness.
+Special thanks to gcaudle66 (Me) for his contributions, inspiration, and thorough testing of this tool to ensure its effectiveness and robustness.
 
 Additionally, a shoutout to OpenAI's ChatGPT for supporting the development and documentation process.
 
 License
 This project is open-source and available under the MIT License.
-
-vbnet
-Copy code
-
-Copy this content into a text editor and save it as `README.md`. Let me know if you need further assistance!
