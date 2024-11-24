@@ -1,0 +1,5 @@
+.venv/
+.notes/
+config
+*.txt
+__pycache__/

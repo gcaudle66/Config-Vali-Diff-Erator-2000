@@ -1,0 +1,181 @@
+# Base Config
+base_config:
+  - "hostname {{hostname}}"
+
+# VRFs
+vrfs:
+  - "vrf definition {{VRF_Name}}"
+  - " address-family ipv4"
+
+# System MTU
+system_mtu:
+  - "system mtu 9216"
+
+# Tacacs Servers
+tacacs_servers:
+  - "tacacs server {{Server_Name}}"
+  - " address ipv4 {{IP_Address}}"
+  - " key {{Tacacs_Key}}"
+  - " timeout 3"
+  - "tacacs server {{Server_Name}}"
+  - " address ipv4 {{IP_Address}}"
+  - " key {{Tacacs_Key}}
+  "
+  - " timeout 3"
+aaa_groups:
+  - "aaa group server tacacs+ Tacacs_Group"
+  - " server name {{Server_Name}}"
+  - " server name {{Server_Name}}"
+  - " ip vrf forwarding Mgmt-vrf"
+  - " ip tacacs source-interface {{InterfaceTypeName}} {{InterfaceSlotPortID}}"
+
+# AAA Policy
+aaa_policy:
+  - "aaa new-model"
+  - "aaa authentication login default group Tacacs_Group local enable"
+  - "aaa authentication dot1x default group {{Group_Name}}"
+  - "aaa authorization exec default local group Tacacs_Group"
+  - "aaa authorization network default group {{Group_Name}}"
+  - "aaa accounting dot1x default start-stop group {{Group_Name}}"
+  - "aaa accounting exec default start-stop group Tacacs_Group"
+  - "aaa accounting commands 1 default start-stop group Tacacs_Group"
+  - "aaa session-id common"
+
+# Radius Servers
+radius_servers:
+  - "radius server {Server_Name}"
+  - " address ipv4 {{IP_Address}} auth-port 1645 acct-port 1646"
+  - " key 1aruba234"
+  - "radius server {Server_Name}"
+  - " address ipv4 1{{IP_Address}} auth-port 1645 acct-port 1646"
+  - " key 1aruba234"
+  - "radius server {Server_Name}"
+  - " address ipv4 1{{IP_Address}} auth-port 1645 acct-port 1646"
+  - " key 1aruba234"
+aaa_radius_groups:
+  - "aaa group server radius CPPM"
+  - " server name {Server_Name}"
+  - " server name {Server_Name}"
+  - " server name {Server_Name}"
+  - " deadtime 1"
+
+# Timezone
+timezone:
+  - "clock timezone CDT -6 0"
+  - "clock summer-time CDT recurring"
+
+
+
+# EIGRP
+eigrp:
+  - "router eigrp {{EIGRP_NAME}}"
+  - " address-family ipv4 unicast autonomous-system {{EIGRP_AS}}"
+  - "  af-interface default"
+  - "   passive-interface"
+  - "  af-interface {{InterfaceTypeName}} {{InterfaceSlotPortID}}"
+  - "   no passive-interface"
+  - "  topology base"
+  - "   redistribute static"
+  - "  network {{Network&Mask}}"
+  - "  eigrp router-id {{IP_Address}}"
+  - "  eigrp stub connected static"
+  - "  nsf"
+  - " address-family ipv4 unicast vrf {{VRF_Name}} autonomous-system {{EIGRP_AS}}"
+  - "  af-interface default"
+  - "   passive-interface"
+  - "  af-interface {{InterfaceTypeName}} {{InterfaceSlotPortID}}"
+  - "   no passive-interface"
+  - "  topology base"
+  - "   redistribute static"
+  - "  network {{Network&Mask}}"
+  - "  eigrp router-id {{IP_Address}}"
+  - "  eigrp stub connected static"
+  - "  nsf"
+
+# Domain
+domain:
+  - "no ip domain lookup"
+  - "ip domain name {{Domain_Name}}"
+
+# VTP
+vtp:
+  - "vtp domain {{VTP_Domain}}"
+  - "vtp mode transparent"
+
+# Dot1x
+dot1x:
+  - "dot1x system-auth-control"
+
+# STP
+stp:
+  - "spanning-tree mode rapid-pvst"
+  - "spanning-tree extend system-id"
+
+# Error Recovery
+errdisable_recovery:
+  - "! Ensure these lines are NOT present"
+  - "errdisable recovery cause udld"
+  - "errdisable recovery cause bpduguard"
+  - "errdisable recovery cause security-violation"
+  - "errdisable recovery interval 100"
+
+# Local Login
+local_login:
+  - "username cwan password {{User_Password}}"
+
+# Enable Secret
+enable_secret:
+  - "enable secret 9 {{Enable_Secret}}"
+
+# LLDP
+lldp:
+  - "lldp run"
+
+# VLAN 1
+vlan_1:
+  - "interface Vlan1"
+  - "no ip address"
+  - "shutdown"
+
+# VLANS
+vlan:
+  - "vlan {{VlanIDs}}"
+  - "name {{VlanName}}"
+
+# Misc
+misc:
+  - "no ip http server"
+  - "no ip http secure-server"
+  - "ip ssh version 2"
+
+# Logging
+logging:
+  - "logging host {{IP_Address}}"
+  - "logging host {{IP_Address}}"
+  - "logging host {{IP_Address}}"
+
+# SNMP
+snmp:
+  - "snmp-server community {{SNMP_COMMUNITY}} RO {{SNMP_ACL}}"
+  - "snmp-server location {{Building_Code_Floor}}"
+  - "snmp-server contact {{SNMP_Contact}}"
+  - "snmp-server chassis-id {{hostname}}"
+
+# COP Policy
+cop_policy:
+  - "control-plane"
+  - "service-policy input system-cpp-policy"
+
+
+# Line Ports
+line_ports:
+  - "line con 0"
+  - "exec-timeout 20 0"
+  - "line vty 0 4"
+  - "access-class {{VTY_ACL}} in vrf-also"
+  - "transport input ssh"
+
+# NTP
+ntp:
+  - "ntp server {{IP_Address}} prefer"
+  - "ntp server {{IP_Address}}"
